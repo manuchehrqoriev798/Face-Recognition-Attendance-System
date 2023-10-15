@@ -1,3 +1,5 @@
+![Screenshot from 2023-10-15 21-10-06](https://github.com/manuchehrqoriev798/Face-Recognition-Attendance-System/assets/112572372/019a26af-f48d-4db8-8d7b-7cf67e5d6f3d)
+![fra](https://github.com/manuchehrqoriev798/Face-Recognition-Attendance-System/assets/112572372/ffb4a653-d734-4419-826c-603b9da250cf)
 # Facial Recognition Attendance System
 
 
