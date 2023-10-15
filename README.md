@@ -1,22 +1,9 @@
-# Project Name
+# Facial Recognition Attendance System
 
-Facial Recognition-Based Attendance Tracking
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Project Overview](#project-overview)
-- [File Structure](#file-structure)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Customization](#customization)
-- [Dependencies](#dependencies)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
-This project is designed for performing facial recognition-based attendance tracking using Python and various libraries. It is intended for educational institutions, allowing you to recognize students' faces and record their attendance efficiently.
+This project, which was inspired by Zain Shahbaz's YouTube videos (@iamzainshahbaz), is designed for performing facial recognition-based attendance tracking using Python and various libraries. It is intended for educational institutions, allowing you to recognize students' faces and record their attendance efficiently.
 
 ## Project Overview
 
@@ -68,11 +55,23 @@ The project depends on the following libraries:
 
 Ensure you have these libraries installed in your environment to run the project successfully.
 
-### Contributing
-
-If you'd like to contribute to this project, feel free to create pull requests or open issues on the GitHub repository. Your contributions are welcome!
-
 ### License
 
-[Specify the project's license and include a link to the license file if applicable.]
+You are free to use, modify, and distribute the code. However, I kindly request that you use it in an ethical manner, respecting privacy and legal regulations, and ensuring the technology is not misused for harmful or unethical purposes.
+
+### Available Models
+
+You can choose different face recognition models by referring to [DeepFace](https://github.com/serengil/deepface). Here are some popular models and their performance scores:
+
+| Model         | LFW Score | YTF Score |
+|---------------|-----------|-----------|
+| Facenet512    | 99.65%    | -         |
+| SFace         | 99.60%    | -         |
+| ArcFace       | 99.41%    | -         |
+| Dlib          | 99.38%    | -         |
+| Facenet       | 99.20%    | -         |
+| VGG-Face      | 98.78%    | 97.40%    |
+| Human-beings  | 97.53%    | -         |
+| OpenFace      | 93.80%    | -         |
+| DeepID        | -         | 97.05%    |
 
