@@ -10,7 +10,7 @@ Inspired by [Zain Shahbaz](https://www.youtube.com/@iamzainshahbaz) (YouTube). B
 
 ## What This Project Does
 
-- **Recognizes faces** from your webcam using a reference photo database (DeepFace, Facenet512).
+- **Recognizes faces** from your webcam using a reference photo database ([DeepFace](https://github.com/serengil/deepface), Facenet512).
 - **Liveness check** so photos/screens cannot be used to fake attendance (pre-trained `liveness.model`).
 - **Writes attendance** to `attendance.csv`: present students with time, then a list of absent students.
 - **Organized by class**: database layout is `Database/<Class>/<StudentName>/` with one or more photos per student.
@@ -143,14 +143,21 @@ So: **run only `face_recognition.py`**. The checkpoint file does not "re-run" th
 
 ## DeepFace model comparison (reference)
 
-| Model      | LFW Score |
-|-----------|-----------|
-| Facenet512 | 99.65%   |
-| SFace      | 99.60%   |
-| ArcFace    | 99.41%   |
-| Dlib       | 99.38%   |
-| Facenet    | 99.20%   |
-| VGG-Face   | 98.78%   |
+Benchmark scores from the [DeepFace](https://github.com/serengil/deepface) library; measured on LFW via [benchmarks](https://github.com/serengil/deepface/tree/master/benchmarks).
+
+| Model        | Measured Score | Declared Score |
+| ------------ | -------------- | -------------- |
+| Facenet512   | 98.4%          | 99.6%          |
+| Human-beings | 97.5%          | 97.5%          |
+| Facenet      | 97.4%          | 99.2%          |
+| Dlib         | 96.8%          | 99.3%          |
+| VGG-Face     | 96.7%          | 98.9%          |
+| ArcFace      | 96.7%          | 99.5%          |
+| GhostFaceNet | 93.3%          | 99.7%          |
+| SFace        | 93.0%          | 99.5%          |
+| OpenFace     | 78.7%          | 92.9%          |
+| DeepFace     | 69.0%          | 97.3%          |
+| DeepID       | 66.5%          | 97.4%          |
 
 ---
 
