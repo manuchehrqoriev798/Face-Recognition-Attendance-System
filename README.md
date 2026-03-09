@@ -1,78 +1,159 @@
+# Face Recognition Attendance System
+
 ![fra](https://github.com/manuchehrqoriev798/Face-Recognition-Attendance-System/assets/112572372/ffb4a653-d734-4419-826c-603b9da250cf)
-# Facial Recognition Attendance System
 
+A Python-based attendance system that uses **face recognition** and **liveness detection** to mark students present or absent. It records attendance in a CSV file with timestamps and supports organizing students by class.
 
-## Introduction
+Inspired by [Zain Shahbaz](https://www.youtube.com/@iamzainshahbaz) (YouTube). Built for schools and institutions that want automatic, camera-based attendance.
 
-This project, which was inspired by Zain Shahbaz's YouTube videos (@iamzainshahbaz), is designed for performing facial recognition-based attendance tracking using Python and various libraries. It is intended for educational institutions, allowing you to recognize students' faces and record their attendance efficiently.
+---
 
-## Project Overview
+## What This Project Does
 
-The project includes the following components:
+- **Recognizes faces** from your webcam using a reference photo database (DeepFace, Facenet512).
+- **Liveness check** so photos/screens cannot be used to fake attendance (pre-trained `liveness.model`).
+- **Writes attendance** to `attendance.csv`: present students with time, then a list of absent students.
+- **Organized by class**: database layout is `Database/<Class>/<StudentName>/` with one or more photos per student.
 
-### File Structure
+---
 
-This project's file structure is as follows:
+## Prerequisites
 
-1. `attendance.csv`: This CSV file is used to store the attendance records of recognized students. It records the students who are present on a given day, along with their timestamps. It also includes the names of absent students.
+- **Python 3.7–3.9** (TensorFlow 2.5 works best in this range)
+- **Webcam**
+- **pip**
 
-2. `Database` Folder: The `Database` folder contains the images of students organized into subfolders, typically by class. These images are used for face recognition during the attendance tracking process.
+---
 
-3. `requirements.txt`: This file lists the Python libraries and their versions required to run the project successfully. It's a standard practice to include this file to ensure that others can easily set up their environment with the necessary dependencies.
+## Installation
 
-4. `face_recognition.py`: This Python script performs the core functionality of the attendance tracking system. It uses the DeepFace library for face recognition. It loads a pre-trained liveness model used to distinguish between real and fake faces, captures video from a camera source, detects and recognizes faces in the captured frames, records the attendance of recognized students in the `attendance.csv` file with timestamps, and displays recognized students on the screen, indicating whether their faces are considered real or fake. If a student is not recognized, they are labeled as "Unknown."
+### 1. Clone the repository
 
-5. `face_recognition-checkpoint.py`: This script is an alternative version of `face_recognition.py`. It performs similar functions, including capturing video, detecting and recognizing faces, and distinguishing real and fake faces. However, it's organized differently and contains commented-out code that can be useful for reference or experimentation.
+```bash
+git clone https://github.com/manuchehrqoriev798/Face-Recognition-Attendance-System.git
+cd Face-Recognition-Attendance-System
+```
 
-6. `liveness.model`: This file contains a pre-trained model for detecting liveness. It is used to determine whether the captured face is a real face or a photograph. The model is essential for ensuring the accuracy of attendance records.
+### 2. Create and activate a virtual environment (recommended)
 
-### Installation
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-To install and run the project, follow these steps:
+On Windows:
 
-- Install the required libraries listed in `requirements.txt`. You can do this using `pip install -r requirements.txt`.
+```cmd
+python -m venv venv
+venv\Scripts\activate
+```
 
-- Organize your student images in the `Database` folder. Each subfolder should correspond to a class or group, containing images of the students.
+### 3. Install dependencies
 
-- Run the `face_recognition.py` script. It will capture video from your camera source and begin recognizing faces.
+```bash
+pip install -r requirements.txt
+```
 
-- Recognized students will be recorded in the `attendance.csv` file with timestamps, and their names will be displayed on the screen.
+### 4. Set up the student database
 
-- The script will also detect absent students and record them in the `attendance.csv` file.
+Create the folder structure and add one or more photos per student (clear face, front-facing):
 
-### Customization
+```
+Database/
+├── ClassA/
+│   ├── Alice/
+│   │   └── photo1.jpg
+│   └── Bob/
+│       └── photo1.jpg
+└── ClassB/
+    └── Carol/
+        └── photo1.jpg
+```
 
-Feel free to customize the code or the way you organize the `Database` folder to suit your specific use case and educational institution's needs.
+Create the folders (example for one class and two students):
 
-### Dependencies
+```bash
+mkdir -p Database/ClassA/Alice
+mkdir -p Database/ClassA/Bob
+```
 
-The project depends on the following libraries:
+Then copy or place face photos into each student folder (e.g. `Database/ClassA/Alice/photo1.jpg`).
 
-- `numpy==1.19.5`
-- `tensorflow==2.5.0`
-- `opencv-python==4.5.3.56`
-- `deepface==0.0.68`
-- `pandas==1.1.5`
+### 5. Run the attendance script
 
-Ensure you have these libraries installed in your environment to run the project successfully.
+```bash
+python face_recognition.py
+```
 
-### License
+- Point the camera at students. Recognized faces are marked and logged to `attendance.csv`.
+- Press **`q`** to quit. After quitting, absent students are appended to the same CSV.
 
-You are free to use, modify, and distribute the code. However, I kindly request that you use it in an ethical manner, respecting privacy and legal regulations, and ensuring the technology is not misused for harmful or unethical purposes.
+---
 
-### Available Models
+## Files in this repo
 
-You can choose different face recognition models by referring to [DeepFace](https://github.com/serengil/deepface). Here are some popular models and their performance scores:
+**Which script to run:** use **`face_recognition.py`**. It is the full, up-to-date version. The other script is an older checkpoint and does less.
 
-| Model         | LFW Score | YTF Score |
-|---------------|-----------|-----------|
-| Facenet512    | 99.65%    | -         |
-| SFace         | 99.60%    | -         |
-| ArcFace       | 99.41%    | -         |
-| Dlib          | 99.38%    | -         |
-| Facenet       | 99.20%    | -         |
-| VGG-Face      | 98.78%    | 97.40%    |
-| Human-beings  | 97.53%    | -         |
-| OpenFace      | 93.80%    | -         |
-| DeepID        | -         | 97.05%    |
+### Scripts (Python)
 
+| File | Purpose | When to use |
+|------|---------|-------------|
+| **`face_recognition.py`** | **Main script.** Runs the camera, recognizes faces, runs liveness check, writes present students (with time) to CSV, then on exit writes the absent list. Expects database layout **`Database/<Class>/<StudentName>/`** with photos inside each student folder. Each student is logged only once; absent list is built from all students in `Database/` after you press `q`. | **Use this one.** |
+| **`face_recogntion-checkpoin.py`** | **Older / backup version.** Same idea (camera + DeepFace + liveness) but: (1) does **not** use a Class/Student folder structure — it only uses one folder level (student name = folder name); (2) writes to CSV **every time** a face is seen as "Real" (so duplicate rows for the same person); (3) writes only the **date**, not time; (4) **does not** write an absent list when you quit. Kept for reference or rollback only. | Do **not** use unless you need the old behavior. |
+
+So: **run only `face_recognition.py`**. The checkpoint file does not "re-run" the main script; it is a separate, simpler version that was saved before adding classes, timestamps, and the absent list.
+
+### Other files
+
+| File or folder | Purpose |
+|----------------|--------|
+| **`liveness.model`** | Pre-trained Keras model used by both scripts. Detects real face vs photo/screen so attendance cannot be faked with a picture. |
+| **`attendance.csv`** | **Output.** Created/updated by `face_recognition.py`: first a header and "Present Students list:", then one row per present student with number, name, class, and time; after you press `q`, "Absent Student list:" and one row per absent student (number, name, class). |
+| **`Database/`** | **You create this.** Put student photos in **`Database/<Class>/<StudentName>/`** (e.g. `Database/ClassA/Alice/photo1.jpg`). Required for `face_recognition.py`. |
+| **`requirements.txt`** | List of Python packages and versions. Use with `pip install -r requirements.txt` for installation. |
+| **`requarements.txt`** | Same content as `requirements.txt` (typo in name). You can ignore it and use `requirements.txt`. |
+
+---
+
+## Configuration
+
+- **Camera index**  
+  In `face_recognition.py`, the line `cap = cv2.VideoCapture(1)` uses camera `1`. If you have a single webcam, change it to `0`:
+
+  ```python
+  cap = cv2.VideoCapture(0)
+  ```
+
+- **Face recognition model**  
+  The script uses `model_name='Facenet512'`. You can switch to other [DeepFace models](https://github.com/serengil/deepface) (e.g. `SFace`, `ArcFace`, `VGG-Face`) by changing that argument in the `DeepFace.find(...)` call.
+
+---
+
+## Dependencies (from requirements.txt)
+
+| Package | Version |
+|---------|---------|
+| numpy | 1.19.5 |
+| tensorflow | 2.5.0 |
+| opencv-python | 4.5.3.56 |
+| deepface | 0.0.68 |
+| pandas | 1.1.5 |
+
+---
+
+## DeepFace model comparison (reference)
+
+| Model      | LFW Score |
+|-----------|-----------|
+| Facenet512 | 99.65%   |
+| SFace      | 99.60%   |
+| ArcFace    | 99.41%   |
+| Dlib       | 99.38%   |
+| Facenet    | 99.20%   |
+| VGG-Face   | 98.78%   |
+
+---
+
+## License and use
+
+You may use, modify, and distribute this code. Please use it in an ethical way, with respect for privacy and local laws, and do not use it for harmful or unethical purposes.
